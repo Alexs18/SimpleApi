@@ -1,10 +1,17 @@
 let routes = require('express');
-let {getUser} = require('../Controllers/index');
+let {getUser, postUser} = require('../controllers/Usuarios');
 
 function RouterHome() {
  
     let router = routes.Router();
-    router.get('/Home', getUser);
+    router.get('/Usuarios', getUser);
+    router.post('/Usuarios', postUser);
+    router.post('/Linux', async(req, res)=>{
+        console.log(req.body)
+    });
+    router.get('/LinuxDev', async(req, res)=>{
+        res.send('linux dev');
+    })
     return router
     
 }

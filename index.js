@@ -1,18 +1,17 @@
 const server = require('express');
 const cors = require('cors');
-const {RouterHome} = require('./src/routes/index');
+const {RouterUser, RouterEmploye} = require('./src/routes/index');
 const express = require('express');
-const connectiondatabase = require('./src/connection/index');
+const connectiondatabase = require('./src/database/index');
 
 const Api = server();
+const ApiRouter = server.Router();
 
 Api.use(cors());
-Api.use(RouterHome())
+Api.use(RouterUser())
+Api.use(RouterEmploye())
 Api.use(express.json())
 
-Api.get('/', (req, res)=>{
-    res.send('hola')
-})
 
 Api.listen(8080, async ()=>{
     console.log(`we are running in the app ${process.env.application_name}`);
