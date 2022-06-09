@@ -15,6 +15,6 @@ Api.get('/', (req, res)=>{
 })
 
 Api.listen(8080, async ()=>{
-    console.log("estamos corriendo");
+    console.log(`we are running in the app ${process.env.application_name}`);
     await connectiondatabase();
 });

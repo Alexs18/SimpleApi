@@ -2,9 +2,13 @@ let mssql = require('mssql');
 let configconnection = require('../config');
 
 async function ConectionDatabase() {
-    let ressultconection = await mssql.connect(configconnection);
-    console.log("Conexión exitosa");
-    return ressultconection;
+    try {
+        let ressultconection = await mssql.connect(configconnection);
+        console.log("Contion with database was success");
+        return ressultconection;   
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = ConectionDatabase;

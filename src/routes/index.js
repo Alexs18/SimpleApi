@@ -1,3 +1,3 @@
 module.exports = {
-    RouterHome: require('./home.js')
+    RouterHome: require('./Usuarios.js')
 }

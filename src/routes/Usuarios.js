@@ -1,12 +1,10 @@
 let routes = require('express');
+let {getUser} = require('../Controllers/index');
 
 function RouterHome() {
  
     let router = routes.Router();
-
-    router.get('/Home', (req, res)=>{
-        res.send("Its is my home");
-    });
+    router.get('/Home', getUser);
     return router
     
 }
