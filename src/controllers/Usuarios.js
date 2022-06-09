@@ -4,12 +4,18 @@ let Sql = require('mssql');
 async function getUsuarios(req, res) {
     let resultado =await connectiondatabase();
     let query = await resultado.request().query('SELECT * FROM Usuarios');
-    res.json(query)
+    res.json({
+        data:'data was success'
+    })
 }
 
 async function postUsuarios(req, res) {
     const linux = await req.body;
-    console.log(linux)
+    res.statuscode = 200;
+    console.log(linux);
+    res.json({
+        data:'was success'
+    })
 }
 
 module.exports = {

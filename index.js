@@ -8,9 +8,10 @@ const Api = server();
 const ApiRouter = server.Router();
 
 Api.use(cors());
+Api.use(express.json())
 Api.use(RouterUser())
 Api.use(RouterEmploye())
-Api.use(express.json())
+
 
 
 Api.listen(8080, async ()=>{
