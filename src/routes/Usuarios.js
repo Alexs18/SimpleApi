@@ -7,9 +7,7 @@ function RouterHome() {
     
     router.get('/Usuarios', getUser);
     router.post('/Usuarios', postUser);
-    router.get('/LinuxDev', async(req, res)=>{
-        res.send('linux dev');
-    })
+   
     return router
     
 }

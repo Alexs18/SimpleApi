@@ -5,9 +5,6 @@ function RouteEmploye() {
     
     let router = routers();
     router.get('/Empleados', getEmpleados);
-    router.get('/Empleados2', (req, res)=>{
-        res.send("Linux2")
-    });
     router.post('/AllEmployed', postEmpleados)
     return router
 
