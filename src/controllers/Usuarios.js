@@ -63,8 +63,31 @@ async function getOneByName(req, res) {
 
 }
 
+async function deleteUser(req, res) {
+   let {Id} = req.params;
+   try {
+    
+        let DeleteUser = await connectiondatabase();
+        let resultdelete = await DeleteUser.request()
+        .input("Id", Id)
+        .query("DELETE FROM Usuarios where Id=@Id");
+        res.json({
+            message:"data was success delete",
+            status:200
+        })
+
+   } catch (error) {
+       res.json({
+           status:500,
+           serverError:error.message,
+           serverCliente:"Datos Invalidos para la busqueda"
+       })
+   }   
+}
+
 module.exports = {
     getUser:getUsuarios,
     postUser:postUsuarios,
-    getOneUser:getOneByName
+    getOneUser:getOneByName,
+    deleteUser:deleteUser
 }

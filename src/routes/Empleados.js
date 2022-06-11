@@ -1,5 +1,5 @@
 let routers = require('express');
-let {getEmpleados, postEmpleados,getOneEmpleados} = require('../controllers/Empleados');
+let {getEmpleados, postEmpleados,getOneEmpleados, deleteEmploye} = require('../controllers/Empleados');
 
 function RouteEmploye() {
     
@@ -7,6 +7,7 @@ function RouteEmploye() {
     router.get('/Empleados', getEmpleados);
     router.post('/AllEmployed', postEmpleados);
     router.get('/Empleados/:Estado_Vacunacion', getOneEmpleados);
+    router.delete('/Empleados/:Id', deleteEmploye);
 
     return router
 

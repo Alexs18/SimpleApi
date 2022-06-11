@@ -7,7 +7,7 @@ async function getEmpleados(req, res) {
         let resultado =await connectiondatabase();
         let query = await resultado.request().query(SimpleQuery);
         res.json({
-            data:query,
+            data:query.recordset,
             status:200
         });     
     } catch (error) {
@@ -64,8 +64,32 @@ async function getOneEmpleados(req, res) {
     }
 }
 
+async function deleteEmploye(req, res) {
+
+    let {Id} = req.params;
+
+    try {
+        let UserDelete = await connectiondatabase();
+        await UserDelete.request()
+        .input("EmpleadosID", Id)
+        .query("DELETE FROM Empleados WHERE EmpleadosID=@EmpleadosID");    
+        res.json({
+            Status:200,
+            message:"Employe was dele success",
+        });  
+
+    } catch (error) {
+        res.json({
+            errorserver:error.message,
+            status:500,
+            errorparams:"Parametro Invalido"
+        });
+    }
+}
+
 module.exports = {
     getEmpleados:getEmpleados,
     postEmpleados:postEmpleados,
-    getOneEmpleados
+    getOneEmpleados:getOneEmpleados,
+    deleteEmploye:deleteEmploye
 }
