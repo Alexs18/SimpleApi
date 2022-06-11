@@ -2,22 +2,42 @@ let connectiondatabase  = require('../database/index');
 let Sql = require('mssql');
 
 async function getUsuarios(req, res) {
-    let resultado =await connectiondatabase();
-    let query = await resultado.request().query('SELECT * FROM Usuarios');
-    res.json({
-        data:'data was success'
-    })
+    try {
+        let resultado =await connectiondatabase();
+        let query = await resultado.request().query('SELECT * FROM Usuarios');
+        res.json({
+            data:query,
+            status:200
+        })   
+    }catch (error) {
+        res.status(500);
+        res.send(error.message)
+    }
 }
 
 async function postUsuarios(req, res) {
-    const data = await req.body;
-    let InsertData = await connectiondatabase();
-    let DataInserted = await InsertData.request()
-        .input("Nombre", Sql.NChar, Nombre)
-        .input("Apellido", Sql.NChar, Apellido)
-        .input("Edad", Sql.NChar, Edad)
-        .query('Insert into Usuarios (Nombre, Apellido, Edad) Values (@Nombre, @Apellido, @Edad)');
-    res.json(DataInserted)
+    const {Nombre, Apellido, Edad} = req.body;
+    try {
+        let InsertData = await connectiondatabase();
+        await InsertData.request()
+            .input("Nombre", Sql.NChar, Nombre)
+            .input("Apellido", Sql.NChar, Apellido)
+            .input("Edad", Sql.NChar, Edad)
+            .query('INSERT INTO Usuarios (Nombre, Apellido, Edad) Values (@Nombre, @Apellido, @Edad)');
+    
+        res.json({
+            data:{
+                Nombre, 
+                Apellido,
+                Edad
+            },
+            status:200,
+            message:"user was add correctly",
+        });
+    } catch (error) {
+        res.status(500);
+        res.send(error.message)
+    }
 }
 
 module.exports = {
