@@ -40,7 +40,31 @@ async function postUsuarios(req, res) {
     }
 }
 
+async function getOneByName(req, res) {
+    
+    try {
+        let {Nombre} = req.params;
+        let SearchByName = await connectiondatabase();
+        let QueryResult = await SearchByName.request()
+        .input("Nombre", Nombre)
+        .query("SELECT * FROM Usuarios WHERE Nombre=@Nombre");
+        res.json({
+            query:QueryResult,
+            status:200,
+            message:"Your request was success"
+        });
+    } catch (error) {
+        res.json({
+            status:500,
+            servererror: error.message,
+            serverCliente: "Dato Invalido para su busqueda"
+        })
+    }
+
+}
+
 module.exports = {
     getUser:getUsuarios,
-    postUser:postUsuarios
+    postUser:postUsuarios,
+    getOneUser:getOneByName
 }

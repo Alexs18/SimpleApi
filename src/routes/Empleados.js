@@ -1,11 +1,13 @@
 let routers = require('express');
-let {getEmpleados, postEmpleados} = require('../controllers/Empleados');
+let {getEmpleados, postEmpleados,getOneEmpleados} = require('../controllers/Empleados');
 
 function RouteEmploye() {
     
     let router = routers();
     router.get('/Empleados', getEmpleados);
-    router.post('/AllEmployed', postEmpleados)
+    router.post('/AllEmployed', postEmpleados);
+    router.get('/Empleados/:Estado_Vacunacion', getOneEmpleados);
+
     return router
 
 }

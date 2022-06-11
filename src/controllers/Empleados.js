@@ -42,7 +42,30 @@ async function postEmpleados(req, res) {
     }
 }
 
+async function getOneEmpleados(req, res) {
+    let {Estado_Vacunacion} = req.params;
+    try {
+        let SearchStateVaccine = await connectiondatabase();
+        let Query = await SearchStateVaccine.request()
+        .input("Estado_Vacunacion",Estado_Vacunacion)
+        .query("SELECT * FROM Empleados WHERE Estado_Vacunacion=@Estado_Vacunacion");
+        res.json({
+            Query,
+            Status:200,
+            message:"yor shear was success",
+            params:Estado_Vacunacion
+        });   
+    } catch (error) {
+        res.json({
+            errorserver:error.message,
+            status:500,
+            errorparams:"Parametro Invalido"
+        });
+    }
+}
+
 module.exports = {
     getEmpleados:getEmpleados,
-    postEmpleados:postEmpleados
+    postEmpleados:postEmpleados,
+    getOneEmpleados
 }
