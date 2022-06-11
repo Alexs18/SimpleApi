@@ -64,6 +64,36 @@ async function getOneEmpleados(req, res) {
     }
 }
 
+async function UpdateEmploye(req, res) {
+    
+    const {Id} = req.params;
+    const {Fecha_Nacimiento,Domicilio,Telefono,Estado_Vacunacion} = req.body;
+
+    try {
+        let query = await connectiondatabase();
+        let changevalue = await query.request()
+        .input("EmpleadosID", Sql.Int, Id)
+        .input("Fecha_Nacimiento", Sql.DateTime, Fecha_Nacimiento)
+        .input("Domicilio", Sql.VarChar, Domicilio)
+        .input("Telefono", Sql.Numeric, Telefono)
+        .input("Estado_Vacunacion", Sql.Bit, Estado_Vacunacion)
+        .query(`UPDATE Empleados SET Fecha_Nacimiento=@Fecha_Nacimiento,
+            Domicilio= @Domicilio, Telefono = @Telefono, Estado_Vacunacion = @Estado_Vacunacion WHERE EmpleadosID =@EmpleadosID`);
+        res.json({
+            status:200,
+            message:"your data was update success"
+        });   
+    } catch (error) {
+        res.json({
+            status:500,
+            servererrror:error.message,
+            clienterror: "Data es Invalida"
+        })
+    }
+
+
+}
+
 async function deleteEmploye(req, res) {
 
     let {Id} = req.params;
@@ -91,5 +121,6 @@ module.exports = {
     getEmpleados:getEmpleados,
     postEmpleados:postEmpleados,
     getOneEmpleados:getOneEmpleados,
-    deleteEmploye:deleteEmploye
+    deleteEmploye:deleteEmploye,
+    UpdateEmploye:UpdateEmploye
 }

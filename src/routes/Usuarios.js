@@ -1,5 +1,5 @@
 let routes = require('express');
-let {getUser, postUser, getOneUser, deleteUser} = require('../controllers/Usuarios');
+let {getUser, postUser, getOneUser, deleteUser,UpdateUser} = require('../controllers/Usuarios');
 
 function RouterHome() {
  
@@ -9,6 +9,7 @@ function RouterHome() {
     router.post('/Usuarios', postUser);
     router.get('/Usuarios/:Nombre', getOneUser);
     router.delete('/Usuarios/:Id', deleteUser);
+    router.put('/Usuarios/:Id', UpdateUser);
    
     return router
     

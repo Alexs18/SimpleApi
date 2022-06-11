@@ -49,7 +49,7 @@ async function getOneByName(req, res) {
         .input("Nombre", Nombre)
         .query("SELECT * FROM Usuarios WHERE Nombre=@Nombre");
         res.json({
-            query:QueryResult,
+            query:QueryResult.recordset,
             status:200,
             message:"Your request was success"
         });
@@ -61,6 +61,32 @@ async function getOneByName(req, res) {
         })
     }
 
+}
+
+async function UpdateUser(req, res) {
+    const {Id} = req.params;
+    const {Nombre, Apellido, Edad} = req.body;
+    try {
+        
+        let updatedata = await connectiondatabase();
+        await updatedata.request()
+        .input("Id", Sql.Int, Id)
+        .input("Nombre", Sql.NChar, Nombre)
+        .input("Apellido", Sql.NChar, Apellido)
+        .input("Edad", Sql.NChar, Edad)
+        .query("UPDATE Usuarios SET Nombre=@Nombre, Apellido=@Apellido, Edad=@Edad WHERE Id=@ID");
+        res.json({
+            message:"Data was update",
+            status:200
+        })
+
+    } catch (error) {
+        res.json({
+            status:500,
+            servererror: error.message,
+            serverCliente: "Dato Invalido para su busqueda"
+        })
+    }
 }
 
 async function deleteUser(req, res) {
@@ -89,5 +115,6 @@ module.exports = {
     getUser:getUsuarios,
     postUser:postUsuarios,
     getOneUser:getOneByName,
-    deleteUser:deleteUser
+    deleteUser:deleteUser,
+    UpdateUser:UpdateUser
 }
