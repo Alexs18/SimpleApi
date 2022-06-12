@@ -1,5 +1,6 @@
 let connectiondatabase  = require('../database/index');
 let Sql = require('mssql');
+let GeneratorPassword = require('../Services/index');
 
 async function getUsuarios(req, res) {
     try {
@@ -16,27 +17,38 @@ async function getUsuarios(req, res) {
 }
 
 async function postUsuarios(req, res) {
-    const {Nombre, Apellido, Edad} = req.body;
+    const {Nombre, Apellido, Edad, Rol} = req.body;
+    let Usuario = `${Nombre}.${Apellido}`;
+    let Contraseña = await GeneratorPassword.passwordRandom();
     try {
         let InsertData = await connectiondatabase();
         await InsertData.request()
             .input("Nombre", Sql.NChar, Nombre)
             .input("Apellido", Sql.NChar, Apellido)
             .input("Edad", Sql.NChar, Edad)
-            .query('INSERT INTO Usuarios (Nombre, Apellido, Edad) Values (@Nombre, @Apellido, @Edad)');
+            .input("Rol", Sql.VarChar, Rol)
+            .input("Usuario", Sql.VarChar, Usuario)
+            .input("Contraseña", Sql.VarChar, Contraseña)
+            .query('INSERT INTO Usuarios (Nombre, Apellido, Edad, Rol, Usuario, Contraseña) Values (@Nombre, @Apellido, @Edad, @Rol, @Usuario, @Contraseña)');
     
         res.json({
             data:{
                 Nombre, 
                 Apellido,
-                Edad
+                Edad,
+                Rol,
+                Usuario,
+                Contraseña
             },
             status:200,
             message:"user was add correctly",
         });
     } catch (error) {
         res.status(500);
-        res.send(error.message)
+        res.send({
+            error:error.message,
+            contraseña: Contraseña
+        })
     }
 }
 
