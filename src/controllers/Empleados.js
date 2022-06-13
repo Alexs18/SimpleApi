@@ -117,6 +117,7 @@ async function deleteEmploye(req, res) {
     }
 }
 
+
 module.exports = {
     getEmpleados:getEmpleados,
     postEmpleados:postEmpleados,

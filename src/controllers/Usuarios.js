@@ -19,7 +19,7 @@ async function getUsuarios(req, res) {
 async function postUsuarios(req, res) {
     const {Nombre, Apellido, Edad, Rol} = req.body;
     let Usuario = `${Nombre}.${Apellido}`;
-    let Contraseña = await GeneratorPassword.passwordRandom();
+    let  {Pwdencrypt, pwdwithoutencrypt} = await GeneratorPassword.passwordRandom();
     try {
         let InsertData = await connectiondatabase();
         await InsertData.request()
@@ -28,7 +28,7 @@ async function postUsuarios(req, res) {
             .input("Edad", Sql.NChar, Edad)
             .input("Rol", Sql.VarChar, Rol)
             .input("Usuario", Sql.VarChar, Usuario)
-            .input("Contraseña", Sql.VarChar, Contraseña)
+            .input("Contraseña", Sql.VarChar, Pwdencrypt)
             .query('INSERT INTO Usuarios (Nombre, Apellido, Edad, Rol, Usuario, Contraseña) Values (@Nombre, @Apellido, @Edad, @Rol, @Usuario, @Contraseña)');
     
         res.json({
@@ -38,7 +38,7 @@ async function postUsuarios(req, res) {
                 Edad,
                 Rol,
                 Usuario,
-                Contraseña
+                contraseña: pwdwithoutencrypt
             },
             status:200,
             message:"user was add correctly",
@@ -46,8 +46,7 @@ async function postUsuarios(req, res) {
     } catch (error) {
         res.status(500);
         res.send({
-            error:error.message,
-            contraseña: Contraseña
+            error:error.message
         })
     }
 }

@@ -1,5 +1,5 @@
 let routers = require('express');
-let {Auth, Authoritation} = require('../middleware/Authoritation');
+let {Auth, Authoritation, TestToConecction} = require('../middleware/Authoritation');
 let {getEmpleados, postEmpleados,getOneEmpleados, deleteEmploye, UpdateEmploye} = require('../controllers/Empleados');
 
 function RouteEmploye() {

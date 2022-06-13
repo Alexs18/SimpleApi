@@ -31,8 +31,21 @@ async function Authoritation(req, res) {
     }
 }
 
+async function TestToConecction(req, res, next) {
+    let {Id} = req.params;
+    if (2> 10) {
+        next()
+    }else{
+        res.status(400)
+        .json({
+            message:"Necesitas Iniciar Sesión"
+        })
+    }
+}
+
 
 module.exports = {
     Auth:Auth,
-    Authoritation:Authoritation
+    Authoritation:Authoritation,
+    TestToConecction:TestToConecction
 }
