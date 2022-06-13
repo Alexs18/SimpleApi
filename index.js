@@ -3,16 +3,19 @@ const cors = require('cors');
 const {RouterUser, RouterEmploye, Auth} = require('./src/routes/index');
 const express = require('express');
 const connectiondatabase = require('./src/database/index');
+const cookieparse = require('cookie-parser')
 let {TestToConecction} = require('./src/middleware/Authoritation');
 
 const Api = server();
 
-Api.get('/New/:Id', (req, res)=>{
+Api.get('/New', (req, res)=>{
 
+    console.log(req.cookies);
     let {Id} = req.params;
     if (2>Id) {
         res.cookie('session', 'Linux', {httpOnly:true});
         res.send('La cookie fue agregada')
+        
     }
 })
 
@@ -32,6 +35,7 @@ Api.post('/Peticion/Cookie', (req, res)=>{
 })
 
 Api.use(cors());
+Api.use(cookieparse())
 Api.use(express.json())
 Api.use(express.urlencoded())
 Api.use(RouterUser())
