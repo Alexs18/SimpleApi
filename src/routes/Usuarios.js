@@ -5,7 +5,7 @@ function RouterHome() {
  
     let router = routes.Router();
     
-    router.get('/Usuarios', getUser);
+    router.get('/Usuarios/pagination/:numpage', getUser);
     router.post('/Usuarios', postUser);
     router.get('/Usuarios/:Nombre', getOneUser);
     router.delete('/Usuarios/:Id', deleteUser);

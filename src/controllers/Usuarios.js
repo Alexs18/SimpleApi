@@ -1,11 +1,13 @@
 let connectiondatabase  = require('../database/index');
 let Sql = require('mssql');
 let GeneratorPassword = require('../Services/index');
+let {QueryUser} = require('../Services/pagination');
 
 async function getUsuarios(req, res) {
+    let {numpage} = req.params;
     try {
-        let resultado =await connectiondatabase();
-        let query = await resultado.request().query('SELECT * FROM Usuarios');
+        
+        let query = await QueryUser("SELECT* FROM usuarios", numpage);
         res.json({
             data:query,
             status:200

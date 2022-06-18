@@ -4,7 +4,7 @@ async function AuthToken(req, res, next) {
     
     let {TokenLogin} = req.cookies;
     let decodedToken = JWT.decode(TokenLogin, '12345')
-    let decode2 = JWT.verify(TokenLogin, "123464647")
+    let decode2 = JWT.verify(TokenLogin, "12345")
     console.log(decodedToken.Edad, decode2)
     if (!TokenLogin) {
         res.status(401).json({
